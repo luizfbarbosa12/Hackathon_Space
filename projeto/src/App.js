@@ -1,11 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
 import ProjectDetails from './components/ProjectDetails/ProjectDetails'
+import ProjectMemberBox from './components/ProjectMembersBox/ProjectMemberBox';
 
 function App() {
   return (
     <div className="App">
-      <ProjectDetails/>
+      {/* <ProjectDetails/> */}
+      <ProjectMemberBox/>
     </div>
   );
 }
