@@ -3,21 +3,23 @@ import Gostar from '../../assets/gostar.png'
 import Comment from '../../assets/comment.png'
 import Edit from '../../assets/edit.png'
 import Add from '../../assets/add-user.png'
-import {CardProjeto, IconsFooter, ProjectDescription, Footer} from './ProjectDetailStyle'
+import {CardProjeto, Header, IconsFooter, ProjectDescription, Footer, ProjectName, Line} from './ProjectDetailStyle'
 
 
 const ProjectDetails = () => {
   return (
     <CardProjeto>
-      <header>
+      <Header>
+      <ProjectName>Projeto Lorem Ipsum</ProjectName>
         <ProjectDescription>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut
           aliquip ex ea commodo consequat.
         </ProjectDescription>
-      </header>
-      <ProjectDescription>Projeto Lorem Ipsum</ProjectDescription>
+      </Header>
+      
+      
       <Footer>
         <section><IconsFooter src={Add}/></section>
         <section><IconsFooter src={Edit}/></section>
