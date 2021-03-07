@@ -1,12 +1,19 @@
-import ProjectDetails from './components/ProjectDetails/ProjectDetails'
-import ProjectMemberBox from './components/ProjectMembersBox/ProjectMemberBox';
+
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom'
+
+import Routes from './routes'
+
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="App">
-      {/* <ProjectDetails/> */}
-      <ProjectMemberBox/>
-    </div>
+    <BrowserRouter>
+    <Header />
+    <Routes />
+    <Footer />
+    </BrowserRouter>
   );
 }
 
