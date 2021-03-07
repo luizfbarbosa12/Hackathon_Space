@@ -1,110 +1,104 @@
 import React, { useState, useEffect } from 'react';
 
-import api from './../../services/api';
-
-import { HomeColors, Pagination, PersonList } from './styles';
-
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdRemoveRedEye } from 'react-icons/md';
-
-import card from './../../assets/capa.jpg';
-
-// import Header from './../../components/Header';
-
-// import Footer from './../../components/Footer';
-
-let pos;
-
-let total;
+import { ExtractSpecialCharacters, GenerateNameSearch} from './../../services/name-search.service';
 
 function Home() {
     const environment = 'http://localhost:3000';
 
-    const [personStarWars, setPersonStarWars] = useState([]);
+    const [projects, setProjects] = useState([]);
 
-    const numberPerPageDefault = 10;
+    const [name, setName] = useState([]);
 
     useEffect(() => {
-        pos = 1;
-        api.get(`/people/?page=${pos}`).then(response => {
-            total = (response.data.count / numberPerPageDefault).toFixed(0);
-            if (response) {
-                setPersonStarWars(response.data.results);
+        const arrayProject = [
+            {name: 'Autenticação JWT', description: 'Criar Autenticação para o login dos usuários a plataforma da space', type: 'BACKEND', personList: [{name: 'Allan Alves'}, {name: 'Felipe Gonçalves'}, {name: 'Luiz Fernando'}], quantityLikes: 10, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+            {name: 'Disponibilizar Rest para consumo dos dados no Front End', description: 'Criar Rests para os CRUDS da plataforma Web', type: 'BACKEND', personList: [{name: 'Allan Alves'}, {name: 'Luiz Fernando'}], quantityLikes: 5, comments: [{message: 'da'}, {message: 'hora'}, {message: '1'}, {message: '2'}]},
+            {name: '1', description: '11', type: 'UI', personList: [{name: 'Allan Alves'}], quantityLikes: 1, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+            {name: '2', description: '112', type: 'UI', personList: [{name: 'Felipe Gonçalves'}, {name: 'Luiz Fernando'}], quantityLikes: 4, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+            {name: '3', description: '113', type: 'UX', personList: [{name: 'Allan Alves'}, {name: 'Luiz Fernando'}], quantityLikes: 8, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+            {name: '4', description: '114', type: 'UX', personList: [{name: 'Felipe Gonçalves'}], quantityLikes: 19, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+            {name: '5', description: '115', type: 'FRONTEND', personList: [{name: 'Allan Alves'}, {name: 'Felipe Gonçalves'}, {name: 'Luiz Fernando'}], quantityLikes: 0, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+            {name: '6', description: '116', type: 'FRONTEND', personList: [{name: 'Allan Alves'}, {name: 'Felipe Gonçalves'}, {name: 'Luiz Fernando'}], quantityLikes: 6, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+        ]
+        setProjects(arrayProject);
+    }, []);
 
-            }   
-        })
-    }, [])
+    function filterName() {
+        const nameProject = name.toUpperCase();
+        const objProjects = [];
+        if (nameProject && nameProject.trim().length > 0) {
+            projects.forEach(element => {
+                const nameWithoutSpecialCharacters = ExtractSpecialCharacters(element.name);
 
-    function nextPage() {
-        pos++;
-        if (pos <= total) {
-            api.get(`/people/?page=${pos}`).then(response => {
-                if (response) {
-                    setPersonStarWars(response.data.results);
-                }
-            })
+                const aux = GenerateNameSearch(nameWithoutSpecialCharacters);
+
+                aux.then(response => {
+                    const includeProjects =  response.includes(nameProject);
+
+                    if (includeProjects === true) {
+                        objProjects.push(element);
+                        setProjects(objProjects);
+                    }
+                })
+            });
         } else {
-            //inserir toastr
-        }
-        
-    }
-
-    function previousPage() {
-        if (pos > 1) {
-            pos--;
-            api.get(`/people/?page=${pos}`).then(response => {
-                if (response) {
-                    setPersonStarWars(response.data.results);
-                    console.log(personStarWars);
-                }
-            })
-        } else {
-            //inserir toastr 
+            // toastr de error
         }
     }
 
-    function viewDetails(name) {
-        const objectPerson = personStarWars.filter((e) => e.name === name);
-        const url = objectPerson[0].url;
-        const urlWithoutLink = url.replace('http://swapi.dev/api/people/', '');
-        const indexPerson = urlWithoutLink.replace('/', '');
-        window.location.href = `${environment}/details/${indexPerson}`;
+    function filterType(typeProject) {
+        const objProjects = projects.filter((e) => e.type === typeProject);
+        if (objProjects && objProjects.length > 0) {
+            setProjects(objProjects);
+        } else {
+            setProjects([]);
+        }
+    }
+
+    function clearFilter() {
+        const arrayProject = [
+            {name: 'Autenticação JWT', description: 'Criar Autenticação para o login dos usuários a plataforma da space', type: 'BACKEND', personList: [{name: 'Allan Alves'}, {name: 'Felipe Gonçalves'}, {name: 'Luiz Fernando'}], quantityLikes: 10, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+            {name: 'Disponibilizar Rest para consumo dos dados no Front End', description: 'Criar Rests para os CRUDS da plataforma Web', type: 'BACKEND', personList: [{name: 'Allan Alves'}, {name: 'Luiz Fernando'}], quantityLikes: 5, comments: [{message: 'da'}, {message: 'hora'}, {message: '1'}, {message: '2'}]},
+            {name: '1', description: '11', type: 'UI', personList: [{name: 'Allan Alves'}], quantityLikes: 1, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+            {name: '2', description: '112', type: 'UI', personList: [{name: 'Felipe Gonçalves'}, {name: 'Luiz Fernando'}], quantityLikes: 4, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+            {name: '3', description: '113', type: 'UX', personList: [{name: 'Allan Alves'}, {name: 'Luiz Fernando'}], quantityLikes: 8, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+            {name: '4', description: '114', type: 'UX', personList: [{name: 'Felipe Gonçalves'}], quantityLikes: 19, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+            {name: '5', description: '115', type: 'FRONTEND', personList: [{name: 'Allan Alves'}, {name: 'Felipe Gonçalves'}, {name: 'Luiz Fernando'}], quantityLikes: 0, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+            {name: '6', description: '116', type: 'FRONTEND', personList: [{name: 'Allan Alves'}, {name: 'Felipe Gonçalves'}, {name: 'Luiz Fernando'}], quantityLikes: 6, comments: [{message: 'Hello'}, {message: 'World'}, {message: 'Teste'}]},
+        ];
+        setProjects(arrayProject);
+    }
+
+    function newProject() {
+        window.location.href = `${environment}/project`;
+    }
+
+    function setTitle(name) {
+        setName(name);
     }
 
     return(
         <div>
-            <HomeColors>
-                <h3>Lista de Personagens</h3>
-            </HomeColors>
-
-            <PersonList>
-                {personStarWars.map(person => {
+            <input type="text" placeholder="Insira o nome do Projeto" onChange={event => setTitle(event.target.value)}/>
+            <button type="button" onClick={() => filterName()}>Adicionar</button>
+            <button type="button" onClick={() => filterType('UI')}>UI</button>
+            <button type="button" onClick={() => filterType('UX')}>UX</button>
+            <button type="button" onClick={() => filterType('BACKEND')}>Back End</button>
+            <button type="button" onClick={() => filterType('FRONTEND')}>Front End</button>
+            <button type="button" onClick={() => clearFilter()}>Limpar Filtro</button>
+            <button type="button" onClick={() => newProject()}>Adicionar Projeto</button>
+            {(!projects || projects.length == 0) && <h1>Projeto não encontrado</h1>}
+            {(projects.length > 0) && (
+            <div>
+                {projects.map(element => {
                     return(
-                        <li key={person.name} style={{backgroundImage: `url(${card})`, backgroundPosition: 'center', backgroundSize: 'cover',
-                        backgroundRepeat: 'no-repeat'}}>
-                            <h3>Nome: {person.name}</h3>
-                            <h3>Nascimento: {person.birth_year}</h3>
-                            <h3>Altura: {person.height} cm</h3>
-                            <h3>Cor dos Olhos: {person.eye_color}</h3>
-                            <button type="button" onClick={() => viewDetails(person.name)}>
-                                <div>
-                                    <MdRemoveRedEye size={30} style={{color: 'gold'}}/>
-                                </div>
-                                <span>Detalhes</span>                   
-                            </button>
-                        </li>        
-                    );
+                        <div key="element.name">
+                            <h1>{element.name}</h1>
+                            <h3>{element.description}</h3>
+                        </div>
+                    )
                 })}
-            </PersonList>
-            
-            <Pagination>
-                <button onClick={previousPage}>
-                    <MdKeyboardArrowLeft size={50} style={{color: 'gold'}} />
-                </button>
-                <p style={{color:'gold'}}>{pos} de {total}</p>
-                <button onClick={nextPage}>
-                    <MdKeyboardArrowRight size={50} style={{color: 'gold'}} />
-                </button>
-            </Pagination>
+            </div>)}
         </div>
     );
 }
