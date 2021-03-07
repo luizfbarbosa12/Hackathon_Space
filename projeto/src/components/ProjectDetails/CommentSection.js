@@ -11,7 +11,7 @@ const CommentSection = (props) => {
   };
 
   const onClickComment = () => {
-      setComments(commentValue)
+      comments.push(commentValue)
   }
   
   console.log(commentValue)

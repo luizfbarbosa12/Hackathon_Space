@@ -9,18 +9,23 @@ import {
   IconsFooter,
   ProjectDescription,
   Footer,
-  ProjectName,
-  Line,
+  ProjectName
 } from "./ProjectDetailStyle";
 import { useState } from "react";
 import GostarPreto from "../../assets/blackHeart.png";
 import CommentSection from "./CommentSection";
+import EditForm from './EditForm'
+import AddMemberForm from './AddMemberForm'
 
 const ProjectDetails = () => {
   const [liked, setLiked] = useState(false);
   const [likesNumber, setLikesNumber] = useState(0);
   const [commenting, setCommenting] = useState(false);
-  const [commentNumber, setCommentNumber] = useState(0)
+  const [commentNumber, setCommentNumber] = useState(0);
+  const [projectDescription, setProjectDescription] = useState('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim adminim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat')
+  const [editing, setEditing] = useState(false)
+  const [members, setMembers] = useState({})
+  const [adding, setAdding] = useState(false)
 
   const onClickCurtida = () => {
     setLiked(!liked);
@@ -40,6 +45,32 @@ const ProjectDetails = () => {
    
 }
 
+const EditDescription = () => {
+  setEditing(!editing)
+  
+}
+
+const onChangeNewDescription = (event) => {
+  setProjectDescription(event.target.value)
+}
+
+const onClickNewDescription = () => {
+  setProjectDescription(projectDescription)
+  setEditing(!editing)
+}
+
+const onClickAdd = () => {
+  setAdding(true)
+}
+
+const onChangeNewMember = (event) => {
+  setMembers(event.target.value)
+}
+
+  let addSection = adding ? <AddMemberForm inputsMembers={onChangeNewMember}/> : ''
+
+  let editSection = editing ? <EditForm saveDescription={onClickNewDescription} newDescription={onChangeNewDescription}/> : ''
+
   let commentSection = commenting ? <CommentSection send={sendingComment}/> : "";
 
   let iconeCurtida;
@@ -55,19 +86,16 @@ const ProjectDetails = () => {
       <Header>
         <ProjectName>Projeto Lorem Ipsum</ProjectName>
         <ProjectDescription>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          {projectDescription}
         </ProjectDescription>
       </Header>
 
       <Footer>
         <section>
-          <IconsFooter src={Add} />
+          <IconsFooter onClick={onClickAdd} src={Add} />
         </section>
         <section>
-          <IconsFooter src={Edit} />
+          <IconsFooter onClick={EditDescription} src={Edit} />
         </section>
         <section>
           <IconsFooter onClick={onClickComment} src={Comment} />
@@ -79,6 +107,8 @@ const ProjectDetails = () => {
         </section>
       </Footer>
       {commentSection}
+      {editSection}
+      {addSection}
     </CardProjeto>
   );
 };
