@@ -8,7 +8,9 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight, MdRemoveRedEye } from 'react
 
 import card from './../../assets/capa.jpg';
 
-import Header from './../../components/Header';
+// import Header from './../../components/Header';
+
+// import Footer from './../../components/Footer';
 
 let pos;
 
@@ -70,7 +72,6 @@ function Home() {
 
     return(
         <div>
-            <Header />
             <HomeColors>
                 <h3>Lista de Personagens</h3>
             </HomeColors>
