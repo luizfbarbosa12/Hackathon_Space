@@ -99,7 +99,21 @@ function Home() {
                     )
                 })}
             </div>)}
+            {/* <div>
+                <HomeColors>
+                </HomeColors>
+
+                <PersonList>
+                </PersonList>
+                
+                <Pagination>
+                    
+                </Pagination>
+
+            </div> */}
         </div>
+        
+
     );
 }
 
