@@ -1,5 +1,4 @@
 import React from "react";
-import { ProjectDescription } from "./ProjectDetailStyle";
 
 const EditForm = (props) => {
   return (

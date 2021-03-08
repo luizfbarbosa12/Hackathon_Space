@@ -9,6 +9,54 @@ export const HomeColors = styled.h3`
     font-weight: bold;
 `;
 
+export const Filters = styled.div`
+    margin-top: 10px;
+
+    input {
+        margin-left: 10px;
+        padding: 10px;
+        border-radius: 10px 0 0 10px;
+        border-color: transparent;
+    }
+
+    img {
+        margin: 10px;
+        height: 50px;
+        width: 50px;
+        background-color: #000000;
+        border-radius: 100px;
+        float: right;
+    }
+
+    button#styleButtonSearch {
+        padding: 10px;
+        border-radius: 0 10px 10px 0;
+        color: #FFFFFF;
+        background-color: #8c0dd8;
+        border-color: transparent;
+
+        &:hover {
+            background: ${darken(0.05, '#8c0dd8')};
+            font-weight: bold;
+        }
+    }
+    
+    button#styleButton {
+        padding: 10px 50px;
+        border-radius: 10px;
+        margin: 10px;
+        color: #FFFFFF;
+        background-color: #8c0dd8;
+        border-color: transparent;
+
+        &:hover {
+            background: ${darken(0.05, '#8c0dd8')};
+            font-weight: bold;
+        }
+    }
+
+`;
+
 export const Pagination = styled.div`
     display: flex;
     justify-content: center;
@@ -23,12 +71,13 @@ export const Pagination = styled.div`
 
 export const PersonList = styled.ul`
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     color: black;
     grid-gap: 20px;
     list-style: none;
     text-align: center;
     margin-top: 100px;
+    margin-bottom: 50px;
 
     li {
         display: flex;
